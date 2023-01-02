@@ -1,3 +1,4 @@
+from random import randint
 from kivymd.uix.screen import MDScreen
 from kivymd.app import MDApp
 from kivy.uix.image import Image
@@ -9,11 +10,12 @@ from kivymd.theming import ThemeManager
 from kivymd.uix.transition.transition import MDSlideTransition
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
+from kivymd.toast import toast
 import cv2
 import numpy
-from random import randint
 import requests
 import json
+import time
 
 
 layouts = """
@@ -40,6 +42,7 @@ MDBottomNavigation:
             resolution: (1080, 1080)
             play: True
         Button:
+            id: capture_button
             text: 'Capturar'
             size_hint_y: None
             height: '48dp'
@@ -47,21 +50,33 @@ MDBottomNavigation:
             
             
     MDBottomNavigationItem: 
-        id: xd
-        name: "process"
+        id: database
+        name: "base de datos"
         text: "Análisis de datos"
         icon: "database"
 """
 
 class Inventario(MDApp):
+    #Función que captura lo que está viendo la cámara
     def capture(self):
         camera = self.root.ids.camera
         id_number = randint(0, 1000000)
         name = 'photo' + str(id_number) + '.png'
         camera.export_to_png("D:/Users/Isaac/Documents/Proyecto_Electrico/inventario/" + name)
         self.captura_actual = name
-        print(name)
+        '''
+        Se va a correr la función de escaneo de OCR aquí para 
+        que cuando el usuario ingrese directamente a la base de datos ya encuentre ahí
+        la placa escaneada
+        '''
+        self.ocr_scan()
 
+        toast('Avance a la pestaña de inventario o capture de nuevo')
+
+        
+
+
+    #Función que realiza el escaneo de la cámara
     def ocr_scan(self):
         url = 'https://app.nanonets.com/api/v2/OCR/Model/34353217-1d3f-4511-b86f-e24e842e66e8/LabelFile/?async=false'
         data = {'file': open(self.captura_actual, 'rb')}
