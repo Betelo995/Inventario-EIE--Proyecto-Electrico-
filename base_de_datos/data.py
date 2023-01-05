@@ -62,12 +62,15 @@ for j in mycursor:
 
 #Como modificar un valor específico
 
-mycursor.execute("UPDATE Activos SET ubicacion = %s, descripcion = %s WHERE placa = %s", ("secretaria", "Silla sin ruedas", 260255))
+#mycursor.execute("UPDATE Activos SET ubicacion = %s, descripcion = %s WHERE placa = %s", ("secretaria", "Silla sin ruedas", 260255))
 
 
 #Solo compruba que si se hizo el update. En la aplicación vamos a updatear todos los valores en caso
 #De que si se haya registrado anteriormente el activo
-mycursor.execute("SELECT * FROM Activos")
+#mycursor.execute("SELECT * FROM Activos")
 
-for j in mycursor:
-    print(j)
+#for j in mycursor:
+#    print(j)
+
+
+#finalización de las pseudo funciones para el manejo de los datos de la placa.
