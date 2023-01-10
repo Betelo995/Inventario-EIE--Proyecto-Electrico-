@@ -1,0 +1,72 @@
+% -----------------------------------------
+% OTROS PAQUETES E INSTRUCCIONES ESPECIALES
+% -----------------------------------------
+
+% PAQUETES
+%%%%%%%%%%
+
+% Para insertar PDFs
+\usepackage{pdfpages}
+
+% Para insertar código fuente estilizado
+\usepackage{listings}
+	\lstset{basicstyle=\ttfamily,
+    		breaklines=true,
+            numbers=left, 
+    		numberstyle=\tiny, 
+    		stepnumber=1, 
+    		numbersep=6pt
+            }
+
+% Para usar múltiples columnas
+\usepackage{multicol}
+
+% Para crear árboles conceptuales
+\usepackage{forest}
+
+% Para insertar símbolos extraños
+\usepackage{marvosym}
+
+% Para insertar texto fútil
+\usepackage{lipsum}
+
+
+% NUEVAS INSTRUCCIONES
+%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\EIEx}{\textsc{Escuela \Lightning~ Ingeniería Eléctrica}}
+
+% Definición de algunos símbolos matemáticos
+\newcommand{\me}{\mathrm{e}}
+\newcommand{\mi}{\mathrm{i}}
+\newcommand{\mj}{\mathrm{j}}
+\newcommand{\md}{\mathrm{d}}
+
+% Listas con menos espacio entre ítemes (más ajustado)
+\newcommand{\ajustado}{\itemsep0pt\parskip0pt\parsep0pt}
+
+% FORMATO PARA EL REGLAMENTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{articulo}
+\newcommand{\articulo}[2]{
+	{
+    \stepcounter{articulo}
+    \noindent
+	\textbf{Artículo \thearticulo} --- \textit{#1}
+	\vspace{2mm}\\
+	}{
+	#2
+	\vspace{2mm} \\
+	}
+}
+
+\newcounter{capitulo}
+\newcommand{\capitulo}[1]{
+	{
+    \stepcounter{capitulo}
+    \centering\large\bfseries
+    Capítulo \Roman{capitulo}. #1
+    \vspace{4mm}\\
+    }
+}

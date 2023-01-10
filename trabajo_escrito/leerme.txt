@@ -1,0 +1,15 @@
+-------------------------------------------
+IE0499 - PROYECTO ELÉCTRICO
+
+Clase proyectoelectrico.cls
+-------------------------------------------
+
+Opciones
+
+[final] muestra la hoja de firmas, los reconocimientos y la doble página entre cada sección en el preámbulo.
+
+[ebook] crea una versión ajustada para lectura en pantallas de tablets o e-readers.
+
+[borrador] crea una versión con mayor espaciado entre renglones y otros ajustes para facilitar la revisión.
+
+Por defecto (ninguna opción): la misma configuración que [final] pero sin la hoja de firmas ni los reconocimientos.

@@ -1,0 +1,115 @@
+% ------------------------------------
+% UNIVERSIDAD DE COSTA RICA
+% Facultad de Ingeniería
+% Escuela de Ingeniería Eléctrica
+% IE0499 - Proyecto Eléctrico
+%
+% PLANTILLA Y GUÍA DEL TRABAJO ESCRITO
+% Versión: v1.0 (marzo 2017)
+% ------------------------------------
+
+% Tipo de documento
+\documentclass[final]{proyectoelectrico}
+
+% A. PAQUETES Y MACROS ESPECIALES -------
+% Paquetes y definiciones que no están incluidos 
+% en la clase proyectoelectrico.cls o que son 
+% propios del proyecto.
+\input{configuracion.tex}
+
+% Tipografía
+\usepackage{libertine}
+\usepackage{libertinust1math}
+\usepackage[T1]{fontenc}
+\renewcommand*{\ttdefault}{cmtt}
+% ---------------------------------------
+
+% B. DATOS ------------------------------
+% Todos los nombres incluyen dos apellidos,
+% acentos y signos de puntuación apropiados.
+% Revisar las recomendaciones sobre el título
+% y los nombres de los profesores en la guía.
+
+% Título del proyecto
+\titulo{Aplicación móvil para el reconocimiento y registro de placas numeradas con aprendizaje automático para el inventario de activos en E.I.E.}
+
+% Autor (nombre y carné)
+\autor{Isaac Rojas Hernández}
+\carne{B76693}
+
+% Profesor(a) guía
+% (Ing.) Nombre Apellido Apellido(, título)
+\guia{Ing. Marco Villalta Fallas, M.Sc}
+
+% Profesores lectores 
+\lectorA{Ing. Marvin Coto Jimenez, PhD.}
+\lectorB{Ing. Harold Moreno Urbina, M.Sc}
+
+% Fecha de entrega del trabajo escrito
+\mes{1}		% Número del mes
+\ano{2023}	% Formato AAAA
+% ---------------------------------------
+
+% C. CONTENIDOS -------------------------
+
+%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%
+
+\frontmatter
+
+% 1. PORTADA
+\portada
+
+% 2. HOJA DE APROBACIÓN
+\iffinal
+\aprobacion
+\fi
+
+% 3. RESUMEN (EN ESPAÑOL E INGLÉS)
+\input{contenido/resumen.tex}
+\input{contenido/abstract.tex}
+
+% 4. RECONOCIMIENTOS
+\iffinal
+\input{contenido/reconocimientos.tex}
+\fi
+
+% 5. TABLAS DE CONTENIDO, FIGURAS Y TABLAS
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+
+% 6. NOMENCLATURA
+\input{contenido/nomenclatura.tex}
+
+\mainmatter
+
+% 7. CAPÍTULOS
+\input{contenido/1_introduccion.tex}
+\input{contenido/2_marco_teorico.tex}
+\input{contenido/3_desarrollo.tex}
+\input{contenido/4_sobre_LaTeX.tex}
+\input{contenido/5_conclusiones.tex}
+
+% 8. APÉNDICES
+\appendix
+\input{apendices/A_ejemplo.tex}
+\input{apendices/B_archivo.tex}
+
+
+\backmatter
+
+% 9. BILIOGRAFÍA
+\bibliographystyle{plain}
+\bibliography{bibliografia/bibliografia.bib}
+
+%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%
+
+% ----------------------------------------------
+% Plantilla elaborada por Fabián Abarca Calderón
+% ----------------------------------------------
