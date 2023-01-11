@@ -95,24 +95,18 @@ MDBottomNavigation:
             pos_hint: {"center_x": 0.90, "center_y": 0.09}
             padding: "4dp", "4dp"
             on_press: app.registar_placa()
-
-
-        
-
-        
-
 """
 
 class Inventario(MDApp):
     #Función que captura lo que está viendo la cámara
     def capture(self):
         camera = self.root.ids.camera
-        id_number = randint(0, 1000000)
+        directory = os.getcwd() + "/"
+        id_number = randint(0, 10000000000000)
         name = 'photo' + str(id_number) + '.png'
-        directorio_actual = os.getcwd()
-        print(directorio_actual)
-        camera.export_to_png(str(directorio_actual)+name)
-        self.captura_actual = name
+        direccion_foto = directory+name
+        camera.export_to_png(direccion_foto)
+        self.captura_actual = direccion_foto
         '''
         Se va a correr la función de escaneo de OCR aquí para 
         que cuando el usuario ingrese directamente a la base de datos ya encuentre ahí
@@ -138,6 +132,7 @@ class Inventario(MDApp):
             response_json = response.text
             response_json = json.loads(response_json)
             self.placa_actual = response_json["result"][0]['prediction'][0]['ocr_text']
+            self.placa_actual = self.placa_actual.replace(" ", "")
 
             return True
         except:
@@ -153,9 +148,9 @@ class Inventario(MDApp):
             )
         mycursor = db.cursor()
         mycursor.execute("SELECT * FROM Activos")
-
+        self.is_registered = False
         for elements in mycursor:
-            if elements[0] == self.placa_actual:
+            if str(elements[0]) == str(self.placa_actual):
                 self.is_registered = True
             else:
                 pass
@@ -203,7 +198,8 @@ class Inventario(MDApp):
         self.theme_cls.theme_style = "Light"
         self.captura_actual = ''
         self.placa_actual = ''
-        self.is_registered = False
+        self.is_registered = None
+        
 
 
         screen = Builder.load_string(layouts)

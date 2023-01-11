@@ -3,7 +3,7 @@
 % --------------------
 \label{C:desarrollo}
 
-En la presente sección se diseñará la aplicación y los componentes necesarios para que funcione de forma adecuada. Es necesario establecer que para poder diseñar la aplicación fue necesario realizar una distribución de las funciones de la misma por medio de distintos componentes. Asegurando así que se tenga pruebas de que cada componente tiene un funcionamiento correcto por separado como en conjunto. En la figura (\ref{appdiagram}), se puede ver como se distribuyó el diseño de la aplicación.
+En la presente sección se desarrolló el diseño la aplicación y los componentes necesarios para que funcione de forma adecuada. Es necesario establecer que para poder diseñar la aplicación se distribuyó las funciones de la misma por medio de distintos componentes. Asegurando así que se tenga pruebas de que cada componente tiene un funcionamiento correcto por separado como en conjunto. En la figura (\ref{appdiagram}), se puede ver como se distribuyó el diseño de la aplicación.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{imagenes/diseño/diagrama_del_programa.png}
@@ -11,16 +11,14 @@ En la presente sección se diseñará la aplicación y los componentes necesario
     \label{appdiagram}
 \end{figure}
 \par
-Se crearon tres principales componentes para la aplicación, donde la principal sería el wrapper o la interfaz del usuario, la red neuronal y la base de datos. Los tres componentes están conectados entre sí por medio del wrapper, que no solamente permite las entradas y las salidas con los usuarios, sino que también corre las funciones para acceder a cada uno de los componentes.
+Se creó tres componentes principales para la aplicación, donde el principal sería el wrapper o la interfaz del usuario, la red neuronal y la base de datos. Estos se encuentran conectados entre sí por medio del wrapper, que no solamente permite las entradas y las salidas con los usuarios, sino que también corre las funciones para acceder a cada uno de los componentes.
 
 \section{Red neuronal}
-Debido a la complejidad y cantidad de recursos que puede requerir crear una red neuronal completamente de cero, se optó por utilizar una red neuronal pre-fabricada, a la cual se le modificasen diferentes parámetros para procesar específicamente imágenes y que realizaran un análisis de OCR. 
+Debido a la complejidad y cantidad de recursos que puede requerir crear una red neuronal completamente de cero, se optó por utilizar una red neuronal pre-fabricada, a la cual se le modificó diferentes parámetros para procesar específicamente imágenes y que realizaran un análisis de OCR. 
 \par
 El servicio utilizado para este proyecto fue el de Nanonets, debido a que las redes neuronales que ofrecen permiten nativamente adaptarlas para el reconocimiento y procesamiento de caracteres. Específicamente se consideró el pre-procesamiento de las imágenes y el procesado como los más significativos a la hora de alterar las especificaciones buscadas dentro de lo que iba a analizar la red.
 \par
-Primeramente se escogió que el modelo de red más adecuado era el de OCR. Luego se permite moficar el tipo de preprocesado que reciben las imágenes una vez que son recibidas por el servidor.
-\par
-El primer parámetro a corregir es la normalización de la imagen, la cual sirve para cambiar la intensidad de los pixeles a uno adecuado. Luego la corrección de torcimiento (Skew correction), que en caso de que la imagen recibida esté torcida permita verla con un mejor ángulo. La reducción de ruido, que intenta minizar el ruido en la imagen. Por último se tomó en cuenta la aplicación de escala de grises y binarización de la imágen para que resalte de forma correcta el texto de las placas.
+Primeramente se escogió que el modelo de red más adecuado era el de OCR. Luego se modificó el tipo de preprocesado que reciben las imágenes una vez que son recibidas por el servidor. El primer parámetro a corregir es la normalización de la imagen, la cual sirve para cambiar la intensidad de los pixeles a uno adecuado. Luego la corrección de torcimiento (Skew correction), que en caso de que la imagen recibida esté torcida permita verla con un mejor ángulo. La reducción de ruido, que realiza un barrido para aclarar la imagen. Por último se tomó en cuenta la aplicación de escala de grises y binarización de la imágen para que resalte de forma correcta el texto de las placas.
 \par
 Es necesario destacar que no fue necesaria la implementación de código para realizar ninguna de las funciones de pre-procesado ni tampoco para los parámetros del procesado de la red. Lo siguiente llevado a cabo fue la definición del tipo de elementos que debería buscar específicamente la red para devolver como respuesta a la salida. Para ello se pusieron parámetros que eliminasen todo tipo de texto y elementos que no correspondieran a un número y que solamente analizara una única línea, debido a que al ser OCR, podría buscar devolver un texto más grande del necesario. Todo esto es necesario debido a que las placas de la Universidad de Costa Rica (figura \ref{ejem_placa}), poseen no solamente el número de activo, sino que también el logo y nombre de la Universidad.
 \begin{figure}[H]
@@ -53,12 +51,12 @@ La base de datos se diseñó pensando en que se debía tener un modelo intuitivo
 Placa (primary key)        & ubicación                    & tipo de activo           & descripción                              \\ \hline
 Número de placa del activo & Donde se encuentra el activo & Clasificación del activo & Descripción más detallada de los activos \\ \hline
 \end{tabular}}
-\caption{Tabla implementada en la base de datos}
+\caption{Tabla que se implementó en la base de datos}
 \label{table1}
 \end{table}
 
 \par
-Para la creación de la tabla se instaló un servidor local por medio de la herramienta MySQL, que permitiera realizar la base de datos sin importarla a un servidor remoto online para realizar las pruebas necesarias dentro del desarrollo de la aplicación. La creación de la tabla dentro de la base de datos se realizó por medio de un script de Python que accediera a la base de datos y generara una solicitud para una tabla nueva con las columnas definidas previamente. El script además dentro de la creación de las columnas define el \textit{Primary Key}, que representa la identificación de cada uno de los registros, no es necesario hacer una asignación automática, puesto que se utilizaría la placa como identificación de cada uno de los registros. El paquete de python utilizado para la gestión de bases de datos fue el nativo de MySQL llamado MySQL Connector, este se instaló dentro del paquete de MYSQL community. El código del script de Python implementado se puede ver a continuación:
+Para la creación de la tabla se instaló un servidor local por medio de la herramienta MySQL, que permitió realizar la base de datos de manera local, para realizar las pruebas necesarias dentro del desarrollo de la aplicación. La creación de la tabla dentro de la base de datos se realizó por medio de un script de Python que accediera a la base de datos y generara una solicitud para una tabla nueva con las columnas definidas previamente. El script además dentro de la creación de las columnas define el \textit{Primary Key}, que representa la identificación de cada uno de los registros, no es necesario hacer una asignación automática, puesto que se utilizaría la placa como identificación de cada uno de los registros. El paquete de python utilizado para la gestión de bases de datos fue el nativo de MySQL llamado MySQL Connector, este se instaló dentro del paquete de MYSQL community. El código del script de Python implementado se puede ver a continuación:
 \newpage
 \begin{lstlisting}[language=Python,frame=single,caption= Script de python para la conexión a una base de datos (creación propia), inputencoding=latin1]
 import mysql.connector
@@ -85,3 +83,64 @@ Todas y cada una de las funciones que gestionan los accesos y las escrituras a l
 
 
 \section{Wrapper de la aplicación}
+ El wrapper de la aplicación tiene como funcionamiento crear una capa que permita la conexión de la base de datos y de la red neuronal con el usuario y entre sí. Se utilizó la librería KivyMD, las cual sirve para la creación de interfaces gráficas multiplataforma. Esto permite que el diseño sea utilizable tanto en la plataforma de desarrollo (donde se usó windows), cómo en la plataforma de distribución (android), ya que los elementos que contiene se adaptan a respuestas físicas (como la de un mouse) y a respuestas táctiles (como en dispositivos móviles).
+ \par
+ KivyMD es una derivación de la librería Kivy, pero que utiliza un diseño moderno (basado en el estilo gráfico de Android actual Material Design 3) para sus elementos. Se realizó de esta forma para que la experiencia de usuario fuese la mejor posible. 
+\par
+ Inicialmente se construyó el esqueleto de la aplicación, el cual no contiene elementos en el, pero permite inicializar el funcionamiento. KivyMD utiliza programación orientada a objetos para definir a los esqueletos, por lo que se creó la clase \textbf{Inventario}. Esta clase consta de 4 métodos o funciones internas y un constructor. 
+ \par
+ El constructor se diseñó con diferentes atributos, los obligatorios establecidos por KivyMD, que son: la versión de Material Design que se utilizó (Material Desing 3) y el tema que utiliza la aplicación (esquema de colores). Luego se definió los atributos propios los cuales fueron: La captura actual (string con la dirección de la captura actual), placa actual (string con la placa que se escaneó más recientemente) y el atributo \textit{is registered} (booleano que determina si la placa que se escaneó se encuentra previamente almacenada en la base de datos). El objetivo principal de estas definiciones se basó en la captura de variables de interés que deriven de los métodos de la aplicación.
+ \par
+ Lo último contenido dentro del constructor, es la pantalla, que importa toda la definición de la interfaz gráfica para mostrarla al usuario. Se escribió las definiciones de la pantalla en la variable \textit{layouts} como un string en lenguaje declarativo de Kivy, que es una forma alternativa, intuitiva y mayormente documentada para el acomodo de los elementos gráficos de la aplicación. En la figura \ref{screen1} se muestra la pantalla principal de la aplicación.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{imagenes/diseño/pantalla1.png}
+    \caption{Pantalla principal de la aplicación}
+    \label{screen1}
+\end{figure}
+\par
+La forma en la que el lenguaje de Kivy acomoda los elementos de la aplicación es jerárquica, por lo que inicialmente se debió seleccionar el tipo de pantalla deseada, esta usualmente determina como se ve la interfaz general de la aplicación. El nivel principal de la jerarquía que se implementó fue \textit{BottomNavigationLayout}, que contiene una barra inferior con botones para seleccionar la pantalla a la que se accede. Luego en nivel 2 se definió 3 pantallas: inicio, captura y análisis de datos. El nivel 3 siendo el último nivel contiene los elementos dentro de las 3 pantallas del nivel 2.
+\par
+La pantalla de inicio o pantalla principal, solamente despliega el logo de la aplicación, que se creó a partir de la tipografía de la EIE y un mensaje de bienvenida para los usuarios. 
+\par
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{imagenes/diseño/pantalla2.png}
+    \caption{Pantalla de captura de la aplicación}
+    \label{screen2}
+\end{figure}
+\par
+La pantalla de captura, que se mostró en la figura \ref{screen2}, contiene 2 elementos: Una imagen en tiempo real de la cámara principal del dispositivo que corre la aplicación y un botón de captura. El botón de captura al ser presionado activa la función \verb|capture(self)|, que almacena en la ubicación actual la imagen de la cámara, asignando un nombre con único y aleatorio, guarda la dirección completa del archivo en \verb|self.captura_actual| y activa la función de \verb|ocr_scan(self)|. En caso de que la imagen se procesó correctamente muestra un mensaje en pantalla para que el usuario avance al análisis de datos y contrariamente un mensaje de error para que el usuario vuelva a tomar la foto.
+\par
+La función \verb|ocr_scan(self)| implementa tanto el Listing 3.1 cómo el Listing 3.2, si el API de Nanonets devuelve una respuesta con la placa procesada en formato de string retorna un \verb|True|, de lo contrario un \verb|False|, que sirve para activar los mensajes finales en la función de captura.
+\par
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{imagenes/diseño/pantalla3.png}
+    \caption{Pantalla de análisis de datos de la aplicación}
+    \label{screen3}
+\end{figure}
+Por último la pantalla de análisis de datos, mostrada en la figura \ref{screen3}, inicialmente al ser presionada activa la función \verb|rev_placa(self)| que se diseñó para verificar la existencia de la placa escaneada dentro de la base de datos. La función inicialmente conecta con el servidor, crea un cursor para ejecutar solicitudes para luego importar todos los datos de la BD. Antes de buscar la placa actual entre todos los datos registrados, pone el valor de \verb|self.is_registered| en falso y si la función logra encontrarla dentro dde la DB, la convierte en verdadero. Cuando \verb|self.is_registered| se encuentra en verdadero, despliega un mensaje en pantalla avisando al usuario de la existencia previa y de la posibilidad de modificar los valores directamente en los campos de texto. Si \verb|self.is_registered| está en falso, se sustituye únicamente el valor de la placa y se despliega un aviso para que el usuario proceda a llenar los datos del activo.
+\par
+Cuando el usuario decide que ya modificó o agregó los datos del registro, únicamente debe tocar el botón de envío, que activa la función \verb|registrar_placa(self)|. Inicialmente la función conecta con el servidor y crea un cursor, para de forma seguida analizar \verb|self.is_registered|, debido a que los procesos de un registro nuevo y la modificación de un registro son distintos. Cuando el atributo es verdadero se utilizó el siguiente código:
+\newpage
+\begin{lstlisting}[language=Python,frame=single,caption= Modificación de registro previamente existente (creación propia), inputencoding=latin1]
+mycursor.execute("UPDATE Activos SET ubicacion = %s, tipo_de_activo = %s, descripcion = %s WHERE placa = %s", (self.root.ids.ubicacion.text, self.root.ids.active_type.text, self.root.ids.descrip.text, self.placa_actual))
+            db.commit()
+            toast("Placa actualizada!")
+\end{lstlisting}
+\par
+Los parámetros dentro del \verb|execute|, corresponden a los strings contenidos en las cajas de texto de la pantalla de análisis de datos. Cuando no se encuentra el valor registrado en la BD, el código que se usó fue el siguiente:
+\begin{lstlisting}[language=Python,frame=single,caption= Registro nuevo de activo (creación propia), inputencoding=latin1]
+mycursor.execute("INSERT INTO Activos (placa, ubicacion, tipo_de_activo, descripcion) VALUES (%s, %s, %s, %s)", (self.placa_actual, self.root.ids.ubicacion.text, self.root.ids.active_type.text, self.root.ids.descrip.text))
+            db.commit()
+            toast("Placa registrada!")
+\end{lstlisting}
+\par
+De esta forma se definió el wrapper y sus elementos, que implementan los otro módulos del diseño inicial, afirmando así la base que se mostró en la figura \ref{appdiagram}. 
+
+
+
+
+
+

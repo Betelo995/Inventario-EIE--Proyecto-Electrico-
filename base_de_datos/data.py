@@ -1,5 +1,5 @@
 import mysql.connector
-
+import pandas as pd
 db = mysql.connector.connect(
     host='localhost',
     user='root',
@@ -72,5 +72,9 @@ for j in mycursor:
 #for j in mycursor:
 #    print(j)
 
+#exportar los datos a excel:
+mycursor.execute("SELECT * FROM Activos")
+df = pd.DataFrame(mycursor)
+df.to_excel(r'C:/Users/isaac/Desktop/activos.xlsx')
 
 #finalización de las pseudo funciones para el manejo de los datos de la placa.
