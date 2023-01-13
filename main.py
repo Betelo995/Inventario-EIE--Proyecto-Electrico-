@@ -12,6 +12,7 @@ from kivy.clock import Clock
 from kivy.graphics.texture import Texture
 from kivymd.toast import toast
 from kivy.utils import platform
+from kivymd.uix.filemanager import MDFileManager
 
 import os
 import cv2
@@ -20,6 +21,7 @@ import requests
 import json
 import time
 import mysql.connector
+import pandas as pd
 
 
 layouts = """
@@ -36,6 +38,37 @@ MDBottomNavigation:
         Image:
             source: "logo.png"
             pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+        MDLabel:
+            pos_hint: {'x': 0.03, 'center_y':0.80}
+            padding: "4dp", "4dp"
+            font_style: "Body1"
+            text: "Bienvenido al registro de inventario de la EIE"
+        MDLabel:
+            pos_hint: {'x': 0.03, 'center_y':0.75}
+            padding: "4dp", "4dp"
+            font_style: "Body1"
+            text: "Avance a la ventana de captura para tomar una foto"
+        MDLabel:
+            pos_hint: {'x': 0.03, 'center_y':0.70}
+            padding: "4dp", "4dp"
+            font_style: "Body1"
+            text: "O importar una de la memoria."
+        MDLabel:
+            pos_hint: {'x': 0.03, 'center_y':0.65}
+            font_style: "Body1"
+            padding: "4dp", "4dp"
+            text: "Puede exportar la base de datos desde esta pantalla"
+        MDFillRoundFlatButton:
+            id: export_button
+            text: "Exportar a Excel"
+            pos_hint: {"center_x": 0.5, "center_y": 0.20}
+            on_release: app.export_to_excel()
+        MDTextField:
+            id: save_location
+            hint_text: "Ingrese la ubicación para almacenar el archivo"
+            theme_text_color: "Secondary"
+            pos_hint: {"center_x": 0.5, "center_y": 0.30}
+            
     
     MDBottomNavigationItem:
         id: capture_screen
@@ -53,8 +86,14 @@ MDBottomNavigation:
             md_bg_color: "red"
             on_press: app.capture()
             pos_hint: {"center_x": 0.90, "center_y": 0.15}
-            
-            
+        
+        MDFloatingActionButton:
+            id: import_button
+            icon: 'folder'
+            md_bg_color: 'blue'
+            on_press: app.open_manager()
+            pos_hint: {'center_x': 0.10, 'center_y': 0.15}
+
     MDBottomNavigationItem:
         id: database
         name: "base de datos"
@@ -118,9 +157,6 @@ class Inventario(MDApp):
         elif result == False:
             toast("Objetivo no válido, por favor escanee de nuevo")
 
-        
-
-
     #Función que realiza el escaneo de la cámara
     def ocr_scan(self):
         try:
@@ -133,11 +169,10 @@ class Inventario(MDApp):
             response_json = json.loads(response_json)
             self.placa_actual = response_json["result"][0]['prediction'][0]['ocr_text']
             self.placa_actual = self.placa_actual.replace(" ", "")
-
+            print("")
             return True
         except:
             return False
-
 
     def rev_placa(self):
         db = mysql.connector.connect(
@@ -190,8 +225,35 @@ class Inventario(MDApp):
             db.commit()
             toast("Placa registrada!")
     
+    def open_manager(self):
+        self.file_manager.show(os.path.expanduser("/"))
 
+    def select_path(self, path: str):
+        self.captura_actual = path
+        result = self.ocr_scan()
+        if result == True:
+            toast('Avance a la pestaña de inventario o capture de nuevo')
+        elif result == False:
+            toast("Objetivo no válido, por favor escanee de nuevo")
+        self.exit_manager()
+    
+    def exit_manager(self, *args):
+        self.file_manager.close()
 
+    def export_to_excel(self):
+        db = mysql.connector.connect(
+                host='localhost',
+                user='root',
+                passwd='InventarioEIE2409',
+                database='inventarioeie'
+            )
+        mycursor = db.cursor()
+        mycursor.execute("SELECT * FROM Activos")
+        df = pd.DataFrame(mycursor)
+        ruta_excel = r''+self.root.ids.save_location.text+'/activos.xlsx'
+        print(ruta_excel)
+        df.to_excel(ruta_excel, index=False)
+                
 
     def build(self):
         self.theme_cls.material_style = 'M3'
@@ -199,7 +261,7 @@ class Inventario(MDApp):
         self.captura_actual = ''
         self.placa_actual = ''
         self.is_registered = None
-        
+        self.file_manager = MDFileManager(exit_manager=self.exit_manager, select_path=self.select_path, preview=True)
 
 
         screen = Builder.load_string(layouts)
