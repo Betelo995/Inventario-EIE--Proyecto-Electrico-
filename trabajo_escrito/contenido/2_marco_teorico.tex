@@ -4,7 +4,7 @@
 \label{C:antecedentes}
 Durante el presente capítulo se desarrollará un repaso sobre los principales conceptos relacionados al proyecto, con el fin de poder consolidar una base teórica esencial para entender el mismo.
 \section{Redes Neuronales}
-\begin{figure}[H]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\textwidth]{imagenes/marco teorico/modelo_red.png}
     \caption{Modelo de una red neuronal \cite{nallasamy}}
@@ -31,11 +31,32 @@ El programador deberá dar a los datos de entrada provistos una salida emparejad
 \subsubsection{Entrenamiento no supervisado}
 En el caso del entrenamiento no supervisado, no se le provee a la red un set de datos de salida deseados, por lo que no hay comparación ni cálculo del error cometido a la hora de procesar los datos. La forma de ajuste de los pesos de cada entrada se da por medio de una comparación interna de las salidas producidas, para que formen un conjunto de datos consistente \cite{olabe_2008}. 
 \subsection{Creación de una red neuronal}
-Las redes neuronales pueden ser creadas o aplicadas de diferentes formas. La más compleja siendo la creación directa de la red por medio de programación haciendo uso de diferentes librerias como pueden ser: TensorFlow, Microsoft Cognitive Toolkit, PyTorch, Keras, Theano, entre otras. 
+Las redes neuronales pueden ser creadas o aplicadas de diferentes formas. La más compleja siendo la creación directa de la red por medio de programación haciendo uso de diferentes bibliotecas como pueden ser: TensorFlow, Microsoft Cognitive Toolkit, PyTorch, Keras, Theano, entre otras. 
 \par
-El proceso de creación de una red conlleva no solamente el tiempo para poder implementarla por medio de la libreria, sino que también el tiempo de entrenamiento para poder finalmente utilizarla. Es importante hacer notar que usualmente el poder computacional necesario para llevar acabo esto es bastante significativo, por lo que no es siempre conveniente.
+El proceso de creación de una red conlleva no solamente el tiempo para poder implementarla por medio de la biblioteca, sino que también el tiempo de entrenamiento para poder finalmente utilizarla. Es importante hacer notar que usualmente el poder computacional necesario para llevar acabo esto es bastante significativo, por lo que no es siempre conveniente.
 \par
 La otra forma de creación de una red neuronal, está dada por medio del uso de servicios de redes neuronales que están basadas en la nube. Usualmente son provistas por terceros y permiten modificar diferentes aspectos del modelo dependiendo de la aplicación que se quiera utilizar. Es necesario llevar acabo el ajuste de la red, así como el proceso de entrenamiento para que se pueda utilizar. Algunos de los provedores de este tipo de redes más conocidos son: Nanonets, Edge Impulse, Rossum, DarwinAI y muchas otras más.
+\subsection{Nanonets}
+Nanonets es un servicio web de redes neuronales que permite crear una para diferentes aplicaciones. El servicio presenta la facilidad de implementar con plantillas o desde cero la red. Las plantillas presentes son: extractor de tablas de Excel, analizador de facturas, escaneo de documentos de identidad o la creación de una propia desde cero, como se puede ver en la figura \ref{nanonets1}.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.6\textwidth]{imagenes/marco teorico/nanonets_create.png}
+    \caption{Interfaz de creación de una red neuronal en Nanonets}
+    \label{nanonets1}
+\end{figure}
+\par
+El servicio tiene modalidad gratuita y de pago. La gratuita permite procesar 100 datos enviados a la API al mes, una cantidad limitada de datos a extraer y 2 entrenamientos para la red (sin límite de datos de entrada). La versión de pago permite capturar tablas completas, hasta 20 datos capturados por procesado, acceso a soporte 24 horas al día y hasta 5000 procesamientos al mes, con un costo total de 499 dólares.
+\par
+Para poder utilizar el servicio únicamente es necesario registrarse con un correo electrónico que permita validar al usuario. Para poder utilizar la red, pasado el entrenamiento se permite el envío de archivos por medio de subida directa a la interfaz web, correo electrónico a la red neuronal, API para lenguajes de programación (Python, Golang, NodeJS, Javascript, C\#, Java y Shell) o importarlos directamente una carpeta de drive designada únicamente para la red. La interfaz principal donde se tienen el historial de archivos procesados se puede ver en la figura \ref{nanonets2}.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.6\textwidth]{imagenes/marco teorico/nanonets2.png}
+    \caption{Página principal de Nanonets}
+    \label{nanonets2}
+\end{figure}
+
+
+
 
 \section{OCR}
 \subsection{Generalidades}
@@ -46,9 +67,9 @@ El OCR es usado por muchas aplicaciones, de las cuales se incluye la transformac
 Los sistemas que implementan OCR, se componen de tres partes principales: Una cámara, software de procesamiento de OCR y una interfaz de salida. El reconocimiento de los caracteres usualmente está procesado por inteligencia artificial (usualmente una red neuronal) que conforme procesa datos nuevos aprende a reconocerlos de mejor manera \cite{Shah2009}. La idea de implementar OCR en los sistemas es evitar el error humano, aumentar la capacidad y tiempo de procesamiento además de permitir un mejor rendimiento a la hora de leer y escribir a archivos. 
 
 \subsection{Implementación}
-La implementación del OCR por medio de software se logra con diferentes librerias que combinan la visión por computador y la inteligencia artificial para el procesamiento de las imágenes. En trabajos como los vistos en \cite{nallasamy} y \cite{Shah2009} es posible apreciar como se creó un algoritmo que procese las imágenes a partir de una red neuronal. El algoritmo también debe contemplar el pre-procesamiento de las imagenes para que sean más fácilmente leídas por la red que las procesará después.
+La implementación del OCR por medio de software se logra con diferentes bibliotecas que combinan la visión por computador y la inteligencia artificial para el procesamiento de las imágenes. En trabajos como los vistos en \cite{nallasamy} y \cite{Shah2009} es posible apreciar como se creó un algoritmo que procese las imágenes a partir de una red neuronal. El algoritmo también debe contemplar el pre-procesamiento de las imagenes para que sean más fácilmente leídas por la red que las procesará después.
 \par
-Hay múltiples librerias para la implementación de OCR para diferentes lenguajes de programación, inclusive Tesseract, el cual es una librería de redes neuronales, incluye funciones que permiten la implementación de OCR.
+Hay múltiples bibliotecas para la implementación de OCR para diferentes lenguajes de programación, inclusive Tesseract, el cual es una librería de redes neuronales, incluye funciones que permiten la implementación de OCR.
 
 \section{Python}
 Python es un lenguaje de programación interpretado, es decir un programa intermediario entre la computadora y el usuario (llamado interprete) lee el código y lo ejecuta línea por línea. Es un lenguaje de alto nivel, que al ser creado se pensó especialmente para desarrollo rápido, sencillo, pero aún así poderoso funcional \cite{van1995python}.
@@ -72,9 +93,9 @@ print("Hola Mundo")
 Es posible notar de los códigos anteriores que la diferencia entre la cantidad de lineas de código en Java es muy superior a la de Python, permitiendo escribir códigos más compactos y más sencillos de leer también. Esto ha hecho que Python sea un lenguaje de programación bastante popular a nivel no-comercial, permitiendo también que se expandan los proyectos que apoyan la creación de librerías para desarrollo en él.
 
 
-\subsection{Librerias}
+\subsection{Bibliotecas}
 \par
-Las librerias son un complemento fundamental de la programación en Python, ya que permiten importar a un código funciones previamente escritas que realizan algún algoritmo requerido a la hora de programar \cite{van1995python}.
+Las bibliotecas son un complemento fundamental de la programación en Python, ya que permiten importar a un código funciones previamente escritas que realizan algún algoritmo requerido a la hora de programar \cite{van1995python}.
 \par
 Con ellas es posible crear códigos para diferentes áreas de aplicación, como por ejemplo el análisis de datos, inteligencia artificial, desarrollo web, ciencias de datos, big data, machine learning e inclusive desarrollo de juegos. La versatilidad que proveen las librerías en conjunto con la facilidad de programación en el lenguaje Python, hacen de la experiencia de desarrollo amigable para cualquier nivel de experiencia que se tenga.
 
@@ -84,7 +105,7 @@ Una base de datos es una forma de organizar información o datos con algún tipo
 Para poder controlar las bases de datos, es necesario un gestor que permita hacer un manejo correcto de las mismas. Para ello existen los sistemas de gestión de bases de datos (SGBD). Su principal función es permitir que se hagan consultas no predefinidas y complejas, es decir que la combinación de datos que se quiere extraer de una base de datos no esté predefinida en el programa que la gestiona para que sea una búsqueda válida. Además gestiona las conexiones que se ralizan a la base, por lo que debe permitir y la conexión de varios usuarios a ella \cite{camps_paré_2005}.
 \par
 Las consultas a la base de datos se realizan por medio de lenguaje escrito (sintaxis) equivalente a un lenguaje de programación, pero específico del tipo de base de datos y el sistema debe interpretar el tipo de acción que se desea realizar. En la figura \ref{BDflux} se puede apreciar el flujo de las consultas a una base de datos. 
-\begin{figure}[H]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.4\textwidth]{imagenes/marco teorico/flujo_BD.png}
     \caption{Flujo de una consulta a una base de datos \cite{camps_paré_2005}.}
@@ -103,7 +124,7 @@ Con lo mencionado anteriormente es posible comprender el proceso de solicitudes 
 \subsection{Modelos de bases de datos}
 \par
 Las bases de datos no se presentan únicamente en un tipo de modelo, sino que a través de los años se han implementado diferentes formas de almacenar los datos dentro de una base de datos y estas se les llaman \textit{modelos de bases de datos}. Se explicará tres de los modelos que se presentan en bases de datos por su relevancia histórica o por su uso popular, siendo estas: jerárquicas, red y relacional, como se observa en la figura \ref{BDmodels}.
-\begin{figure}[H]
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\textwidth]{imagenes/diseño/modelodb.png}
     \caption{Modelos de bases de datos \cite{camps_paré_2005}.}
@@ -122,3 +143,4 @@ La estructura de los modelos de red se asemejan a los jerárquicos, con la difer
 \par
 El tercer modelo de la figura \ref{BDmodels} es el relacional, el cual se diferencia mucho de los otros dos modelos presentados anteriormente, esto debido a que está basado en el concepto matemático de relación. Su principal elemento es la tabla, la cual es la causa del nombre que se le asigna. La tabla consta de filas y columnas, donde cada columna usualmente presente un atributo y cada fila es un registro único diferente del resto (aunque no necesariamente con diferentes columnas, a excepción de la característica principal, que es diferenciante). Es una forma intuitiva y sencilla de almacenar datos, ya que a nivel lógico tiene mucho sentido almacenarlos de esta forma, además permite la facilidad de tener más de una tabla donde puede o no alguna de sus filas tener relación con alguna fila y/o columna de otra \cite{camps_paré_2005}.
 
+\newpage

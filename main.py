@@ -160,7 +160,7 @@ class Inventario(MDApp):
     #Función que realiza el escaneo de la cámara
     def ocr_scan(self):
         try:
-            url = 'https://app.nanonets.com/api/v2/OCR/Model/34353217-1d3f-4511-b86f-e24e842e66e8/LabelFile/?async=false'
+            url = 'https://app.nanonets.com/api/v2/OCR/Model/4e42ab1f-7985-4ee1-aab5-00e1c1e62f9a/LabelFile/?async=false'
             data = {'file': open(self.captura_actual, 'rb')}
 
             response = requests.post(url, auth=requests.auth.HTTPBasicAuth('0DeaHQHCf7qAs9n7mFAGmF9gHd6IVMA9', ''), files=data)
@@ -175,6 +175,10 @@ class Inventario(MDApp):
             return False
 
     def rev_placa(self):
+        self.root.ids.num_placa.text = self.placa_actual
+        self.root.ids.ubicacion.text = ''
+        self.root.ids.active_type.text = ''
+        self.root.ids.descrip.text = ''
         db = mysql.connector.connect(
                 host='localhost',
                 user='root',
